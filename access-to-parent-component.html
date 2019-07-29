@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Access to parent component</title>
+  </head>
+  <body>
+    <div id="app">
+      <Parent>
+        <Children></Children>
+      </Parent>
+    </div>
+  </body>
+  <script src="https://unpkg.com/vue"></script>
+  <script>
+
+    Vue.component('Parent', {
+      template:
+      `<div>
+        <h1 style="color: red">Parent</h1>
+        <slot/>
+      </div>`,
+      data () {
+        return {
+          value: 100
+        }
+      }
+    })
+
+    Vue.component('Children', {
+      template: 
+      `<div>
+        <h2 style="color: blue">Children</h2>
+        <div>
+          {{ data }}
+        </div>
+      </div>`,
+      data () {
+        return {
+          data: ''
+        }
+      },
+      mounted () {
+        this.data = this.$parent.$data.value
+      }
+    })
+
+    new Vue({
+      el: '#app'
+    })
+
+  </script>
+</html>
